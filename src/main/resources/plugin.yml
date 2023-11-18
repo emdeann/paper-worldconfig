@@ -1,0 +1,10 @@
+name: MCWorldConfig
+version: '${version}'
+main: dev.deann.WorldConfig
+api-version: '1.20'
+
+commands:
+  buildYaml:
+    description: Create the YAML config file after setting blocks ingame
+    usage: /buildYaml
+    aliases: [build, buildYaml]
