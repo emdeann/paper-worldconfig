@@ -13,7 +13,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.jetbrains.annotations.NotNull;
+import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -26,8 +28,8 @@ public class ConfigManager implements Listener {
 
     final Material SPAWN_BLOCK = Material.GOLD_BLOCK;
     final Material CHEST_BLOCK = Material.CHEST;
-    private static ArrayList<Coordinate> chestLocations = new ArrayList<>();
-    private static ArrayList<Coordinate> spawnLocations = new ArrayList<>();
+    private static ArrayList<String> chestLocations = new ArrayList<>();
+    private static ArrayList<String> spawnLocations = new ArrayList<>();
 
 
 
@@ -37,18 +39,18 @@ public class ConfigManager implements Listener {
                 event.getBlockPlaced().getZ());
         Material eventMaterial = event.getBlockPlaced().getBlockData().getMaterial();
         if (eventMaterial == SPAWN_BLOCK) {
-            spawnLocations.add(loc);
+            spawnLocations.add(loc.toString());
             event.getPlayer().sendMessage(Component.text("Spawn added at " + loc, NamedTextColor.DARK_PURPLE));
         }
         else if (eventMaterial == CHEST_BLOCK) {
-            chestLocations.add(loc);
+            chestLocations.add(loc.toString());
             event.getPlayer().sendMessage(Component.text("Chest added at " + loc, NamedTextColor.DARK_PURPLE));
         }
     }
 
 
    public static boolean dumpConfig() {
-        Map<String, ArrayList<Coordinate>> yamlMap = new HashMap<>();
+        Map<String, ArrayList<String>> yamlMap = new HashMap<>();
         yamlMap.put("Spawns", spawnLocations);
         yamlMap.put("Chests", chestLocations);
         Yaml yaml = new Yaml();
