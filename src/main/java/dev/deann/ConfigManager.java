@@ -8,6 +8,7 @@ import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -50,20 +51,10 @@ public class ConfigManager implements Listener {
 
 
    public static boolean dumpConfig() {
-        Map<String, ArrayList<String>> yamlMap = new HashMap<>();
-        yamlMap.put("Spawns", spawnLocations);
-        yamlMap.put("Chests", chestLocations);
-        Yaml yaml = new Yaml();
-        FileWriter writer;
-        try {
-            writer = new FileWriter("C:/Users/dtm44/Desktop/config.yml");
-        } catch (IOException e) {
-
-            System.out.println(e.getMessage());
-            return false;
-        }
-
-        yaml.dump(yamlMap, writer);
+        FileConfiguration config = WorldConfig.getInstance().getConfig();
+        config.set("Spawns", spawnLocations);
+        config.set("Chests", chestLocations);
+        WorldConfig.getInstance().saveConfig();
         chestLocations.clear();
         spawnLocations.clear();
         return true;

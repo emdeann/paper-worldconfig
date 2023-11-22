@@ -7,6 +7,7 @@ public final class WorldConfig extends JavaPlugin {
     private static WorldConfig instance;
     @Override
     public void onEnable() {
+        this.saveDefaultConfig();
         Bukkit.getPluginManager().registerEvents(new ConfigManager(), this);
         Bukkit.getPluginCommand("buildYaml").setExecutor(new BuildCommandExecutor());
         instance = this;
